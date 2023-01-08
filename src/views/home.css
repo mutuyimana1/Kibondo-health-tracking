@@ -1,0 +1,92 @@
+* {
+  font-size: 17px;
+}
+
+.home-justifycontent {
+  background-image: url("../../public/img/What-to-Bring-When-Visiting-a-New-Mom-3-1024x851.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 70vh;
+  display: flex;
+}
+
+.home-justifycontent-partone {
+  width: 50%;
+  background-color: #615f60;
+  clip-path: polygon(0 0, 100% 0%, 56% 100%, 0% 100%);
+}
+.d-inline-block {
+  font-size: 30px;
+}
+.button {
+  background-color: #615f60;
+}
+.img {
+  overflow: hidden;
+  height: 300px;
+}
+
+.login-container {
+}
+.login-popup {
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  text-align: center;
+  padding: 0 30px 30px;
+  visibility: hidden;
+  transition: transform 0.4s, top 0.4s;
+}
+
+.open-popup {
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+.login-popup img {
+  width: 100px;
+  margin-top: -50px;
+  border-radius: 50%;
+}
+.login-popup h1 {
+  font-size: 38px;
+  font-weight: 500;
+  margin: 30px;
+}
+.login-popup button {
+  width: 100px;
+  margin-top: 50px;
+  padding: 10px 0;
+  background: #6fd649;
+  color: #fff;
+  border: 0;
+  outline: none;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0.2);
+}
+.textField-content {
+  display: flex;
+}
+a {
+  cursor: pointer;
+}
+span {
+  cursor: pointer;
+}
+.modal-size {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+}
