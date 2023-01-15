@@ -1,10 +1,12 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import Header from "./header";
 
 function BmiResult() {
   return (
     <div>
       <Header />
+
       <div>
         {/* Health track start*/}
         <div className="container-fluid bg-primary my-5 py-5">
@@ -65,8 +67,8 @@ function BmiResult() {
                       <tr>
                         <th>Age</th>
                         <th>Gender</th>
-                        <th>Weight (in kilograms)</th>
-                        <th>height (in centimeters)</th>
+                        <th>Weight (in pound)</th>
+                        <th>height (in inches)</th>
                       </tr>
                       <tr>
                         <td>3</td>

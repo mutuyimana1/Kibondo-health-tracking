@@ -1,11 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
 import { Districts } from "rwanda";
+import axios from "axios";
 
 function AddBaby() {
-  useEffect(() => {
-    console.log(Districts());
-  }, []);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [fatherName, setFatherName] = useState("");
+  const [motherName, setMotherName] = useState("");
+  const [gender, setGender] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [district, setDistrict] = useState("");
+  const [cell, setCell] = useState("");
+  const [province, setProvince] = useState("");
+  const [sector, setSector] = useState("");
+
+  const handleBabies = (e) => {
+    e.preventDefault();
+    console.log(
+      firstName,
+      lastName,
+      fatherName,
+      motherName,
+      telephone,
+      district,
+      gender,
+      cell,
+      province,
+      sector
+    );
+    axios
+      .post("http://localhost:4040/baby/create", {
+        firstName,
+        lastName,
+        fatherName,
+        motherName,
+        gender,
+        telephone,
+        district,
+        cell,
+        province,
+        sector,
+      })
+      .then((res) => {
+        setFirstName("");
+        setLastName("");
+        setFatherName("");
+        setMotherName("");
+        setGender("");
+        setProvince("");
+        setSector("");
+        setCell("");
+        setDistrict("");
+        setTelephone("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <Sidebar />
@@ -25,7 +78,12 @@ function AddBaby() {
                       <label>
                         First Name <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -33,7 +91,12 @@ function AddBaby() {
                       <label>
                         Last Name <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -41,7 +104,12 @@ function AddBaby() {
                       <label>
                         Father's Name <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={fatherName}
+                        onChange={(e) => setFatherName(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -49,7 +117,12 @@ function AddBaby() {
                       <label>
                         Mother's Name <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={motherName}
+                        onChange={(e) => setMotherName(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -57,7 +130,12 @@ function AddBaby() {
                       <label>
                         Parent's contact <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -66,7 +144,11 @@ function AddBaby() {
                         Province <span className="text-danger">*</span>
                       </label>
                       {/* <input class="form-control" type="text" /> */}
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={province}
+                        onChange={(e) => setProvince(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">Kigali</option>
                         <option value="Western Province">
@@ -89,7 +171,11 @@ function AddBaby() {
                       <label>
                         District <span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={district}
+                        onChange={(e) => setDistrict(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">option1</option>
                         <option value="Western Province">option1</option>
@@ -104,7 +190,11 @@ function AddBaby() {
                       <label>
                         Sector <span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={sector}
+                        onChange={(e) => setSector(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">option1</option>
                         <option value="Western Province">option1</option>
@@ -119,7 +209,11 @@ function AddBaby() {
                       <label>
                         Cell <span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={cell}
+                        onChange={(e) => setCell(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">option1</option>
                         <option value="Western Province">option1</option>
@@ -129,31 +223,7 @@ function AddBaby() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
-                        parent's contact <span className="text-danger">*</span>
-                      </label>
-                      <input
-                        className="form-control"
-                        type="text"
-                        placeholder="078......."
-                      />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
-                        Date of Birth <span className="text-danger">*</span>
-                      </label>
-                      <div className="cal-icon">
-                        <input
-                          type="text"
-                          className="form-control datetimepicker"
-                        />
-                      </div>
-                    </div>
-                  </div>
+
                   <div className="col-sm-6">
                     <div className="form-group gender-select">
                       <label className="gen-label">
@@ -163,7 +233,8 @@ function AddBaby() {
                         <label className="form-check-label">
                           <input
                             type="radio"
-                            name="gender"
+                            name={gender}
+                            onChange={(e) => setGender(e.target.value)}
                             className="form-check-input"
                           />
                           Male
@@ -173,7 +244,8 @@ function AddBaby() {
                         <label className="form-check-label">
                           <input
                             type="radio"
-                            name="gender"
+                            name={gender}
+                            onChange={(e) => setGender(e.target.value)}
                             className="form-check-input"
                           />
                           Female
@@ -183,7 +255,10 @@ function AddBaby() {
                   </div>
                 </div>
                 <div className="m-t-20 text-center">
-                  <button className="btn btn-primary submit-btn">
+                  <button
+                    className="btn btn-primary submit-btn"
+                    onClick={handleBabies}
+                  >
                     ADD BABY
                   </button>
                 </div>

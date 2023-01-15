@@ -1,15 +1,123 @@
-import React from "react";
+import React, { useState } from "react";
 import "./home.css";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import image1 from "../assets/images/pexels-photo-11369364.jpeg";
 import image2 from "../assets/images/pexels-photo-6801865.jpeg";
 import image3 from "../assets/images/pexels-photo-6577508.jpeg";
+import axios from "axios";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Link } from "react-router-dom";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 function Home() {
+  const [gender, setGender] = useState("");
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [age, setAge] = useState("");
+  const [BMI_Percentile, setBMI_Percentile] = useState("");
+  const [category, setCategory] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const HealthTrack = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    console.log(gender, weight, height, age);
+    axios
+      .post("http://localhost:4040/measure/fill", {
+        gender,
+        weight,
+        height,
+        age,
+        BMI_Percentile,
+        message,
+        telephone,
+      })
+      .then((res) => {
+        console.log("result value", res);
+        setBMI_Percentile(res.data.BMI_Percentile);
+        setMessage(res.data.message);
+        setTelephone(res.data.telephone);
+        setCategory(res.data.readBlog.searchKeyword);
+
+        // setGender("");
+        // setWeight("");
+        // setHeight("");
+        // setBMI_Percentile("");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
+
   return (
     <div>
       <Header />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="col-lg-12">
+            <div className="bg-white text-center rounded p-5">
+              <h1 className="mb-4">BMI PERCENTILE RESULT</h1>
+              <table>
+                <style
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      "\n                  th {\n                         width:100%              color: white;\n                    padding-left: 15px;\n                    border-bottom: 1px solid #ddd;\n                  }\n                  tr {\n                    background-color: azure;\n                    font-size: small;\n                  }\n                  td {\n                    height: 70px;\n                  }\n                ",
+                  }}
+                />
+                <tbody>
+                  <tr>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Weight (in pound)</th>
+                    <th>height (in inches)</th>
+                    <th>BMI Percetile Result</th>
+                    <th>Comment</th>
+                  </tr>
+                  <tr>
+                    <td>{age}</td>
+                    <td>{gender}</td>
+                    <td>{weight}</td>
+                    <td>{height}</td>
+                    <td>{BMI_Percentile}</td>
+                    <td>
+                      {message}
+                      <Link to={"/blogs/" + category.toLowerCase()}>
+                        View Advice
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </Box>
+      </Modal>
       {/* login form */}
 
       {/* login end */}
@@ -29,7 +137,7 @@ function Home() {
               </h1>
               <div className="pt-2">
                 <a
-                  href="blog.html"
+                  href="/blogs"
                   className="btn btn-light rounded-pill py-md-3 px-md-5 mx-2"
                 >
                   BLOGS
@@ -109,26 +217,42 @@ function Home() {
                         <select
                           className="form-select bg-light border-0"
                           style={{ height: 55 }}
+                          name={gender}
+                          onChange={(e) => setGender(e.target.value.toString())}
                         >
                           <option selected>Choose Gender</option>
-                          <option value={1}>Male</option>
-                          <option value={2}>Female</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
                         </select>
                       </div>
                       <div className="col-12 col-sm-6">
                         <input
                           type="number"
                           className="form-control bg-light border-0"
-                          placeholder="weight in kgs"
+                          placeholder="weight in ponds"
                           style={{ height: 55 }}
+                          name={weight}
+                          onChange={(e) => setWeight(e.target.value)}
                         />
                       </div>
                       <div className="col-12 col-sm-6">
                         <input
                           type="number"
                           className="form-control bg-light border-0"
-                          placeholder="height in centimeters"
+                          placeholder="telephone"
                           style={{ height: 55 }}
+                          name={telephone}
+                          onChange={(e) => setTelephone(e.target.value)}
+                        />
+                      </div>
+                      <div className="col-12 col-sm-6">
+                        <input
+                          type="number"
+                          className="form-control bg-light border-0"
+                          placeholder="height in inches"
+                          style={{ height: 55 }}
+                          name={height}
+                          onChange={(e) => setHeight(e.target.value)}
                         />
                       </div>
                       <div className="col-12 col-sm-6">
@@ -142,6 +266,8 @@ function Home() {
                             className="form-control bg-light border-0 datetimepicker-input"
                             placeholder="age"
                             style={{ height: 55 }}
+                            name={age}
+                            onChange={(e) => setAge(e.target.value)}
                           />
                         </div>
                       </div>
@@ -149,8 +275,9 @@ function Home() {
                         <button
                           className="btn btn-primary w-100 py-3"
                           type="submit"
+                          onClick={HealthTrack}
                         >
-                          <a href="Bmi-result.html" style={{ color: "white" }}>
+                          <a style={{ color: "white" }} onClick={handleOpen}>
                             Generate results
                           </a>
                         </button>
@@ -178,7 +305,7 @@ function Home() {
                 <div className="bg-light rounded overflow-hidden">
                   <img className="img-fluid w-100 img" src={image1} alt />
                   <div className="p-4">
-                    <a className="h3 d-block mb-3" href="detail.html">
+                    <a className="h3 d-block mb-3" href="#">
                       Vaccinations: Check your baby's vaccination status
                     </a>
                     <p className="m-0">

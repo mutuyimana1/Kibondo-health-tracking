@@ -32,9 +32,9 @@ function About() {
                   also as a contribution to Rwandan society in the fight against
                   malnutrition in children. this website will help you to know
                   how to take care of young ones and it will also help you to
-                  track the health of your child. by registering on this system
+                  track the health of your child.by registering on this system
                   you will receive messages as a reminder to take your child to
-                  the nearest hospital for check up and also remind you when the
+                  the nearest hospital for check up and remind you when the
                   child must take the vaccine.
                 </b>
               </p>

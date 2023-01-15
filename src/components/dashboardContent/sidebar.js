@@ -5,7 +5,7 @@ function Sidebar() {
     <div>
       <div className="header">
         <div className="header-left">
-          <a href="index-2.html" className="logo">
+          <a href="/" className="logo">
             <span>IKIBONDO</span>
           </a>
         </div>
@@ -25,21 +25,16 @@ function Sidebar() {
             <ul>
               <li className="menu-title">Main</li>
               <li className="active">
-                <a href="index-2.html">
+                <a href="/dashboard">
                   <i className="fa fa-dashboard" /> <span>Dashboard</span>
                 </a>
               </li>
               <li>
-                <a href="Users.html">
+                <a href="/users">
                   <i className="fa fa-users" /> <span>System Users</span>
                 </a>
               </li>
-              {/* <li>
-                <a href="babies.html">
-                 
-                  <i className="fa fa-child" /> <span>Babies</span>
-                </a>
-              </li> */}
+
               <li className="submenu">
                 <a href="#">
                   <i className="fa fa-child" /> <span> Babies</span>
@@ -82,30 +77,19 @@ function Sidebar() {
                   </li>
                 </ul>
               </li>
-              {/* <li>
-                <a href="mothers.html">
-                  <i className="fa fa-female" />
-                  <span>Expectant Mothers</span>
-                </a>
-              </li> */}
-              {/* <li>
-                <a href="hospitals.html">
-                  <i className="fa fa-hospital-o" />
-                  <span>Hospitals</span>
-                </a>
-              </li> */}
+
               <li>
                 <a href="#">
                   <i className="fa fa-medkit" />
                   <span>Vaccicines</span>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#">
                   <i className="fa fa-envelope" />
                   <span>Message</span>
                 </a>
-              </li>
+              </li> */}
               {/* WEBSITE'S ELEMENTS*/}
               <li className="menu-title">Website's Elements</li>
               <li className="submenu">
@@ -115,13 +99,10 @@ function Sidebar() {
                 </a>
                 <ul style={{ display: "none" }}>
                   <li>
-                    <a href="bloge.html">Blog</a>
-                  </li>
-                  <li>
                     <a href="/allblogs">Blog View</a>
                   </li>
                   <li>
-                    <a href="addblog">Add Blog</a>
+                    <a href="/addblog">Add Blog</a>
                   </li>
                 </ul>
               </li>

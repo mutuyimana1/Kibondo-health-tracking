@@ -1,7 +1,94 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Sidebar from "./sidebar";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Dashboard() {
+  const user = useSelector((state) => state?.auth);
+
+  const [babies, setBabies] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [mothers, setMothers] = useState([]);
+  const [isMotherFecthing, setIsMotherFetching] = useState(false);
+  const [hospitals, setHospitals] = useState([]);
+  const [isHospitalFetching, setIsHospitalFetching] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [isUserFetching, setIsUserFetching] = useState(false);
+  const navigate = useNavigate();
+  const fetchUsers = () => {
+    setIsFetching(true);
+    axios
+      .get("http://localhost:4040/user/all")
+      .then((res) => {
+        setUsers(res.data.data);
+        setIsUserFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsUserFetching(false);
+      });
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+  useEffect(() => {
+    if (!user.token) {
+      navigate("/");
+    }
+  }, [user]);
+
+  const fetchHospitals = () => {
+    setIsFetching(true);
+    axios
+      .get("http://localhost:4040/hospital/hospitals")
+      .then((res) => {
+        setHospitals(res.data.data);
+        setIsHospitalFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsHospitalFetching(false);
+      });
+  };
+  useEffect(() => {
+    fetchHospitals();
+  }, []);
+
+  const fetchBabies = () => {
+    setIsFetching(true);
+    axios
+      .get("http://localhost:4040/baby/all")
+      .then((res) => {
+        setBabies(res.data.data);
+        setIsFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsFetching(false);
+      });
+  };
+  useEffect(() => {
+    fetchBabies();
+  }, []);
+
+  const fetchMothers = () => {
+    setIsMotherFetching(true);
+    axios
+      .get("http://localhost:4040/parent/all")
+      .then((res) => {
+        setMothers(res.data.data);
+        setIsMotherFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsMotherFetching(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchMothers();
+  }, []);
   return (
     <div>
       <div className="main-wrapper">
@@ -19,8 +106,17 @@ function Dashboard() {
                       <i className="fa fa-users" aria-hidden="true" />
                     </span>
                     <div className="dash-widget-info text-right">
-                      <h3>98</h3>
-                      <span className="widget-title1">System Users </span>
+                      <h3>{users.length}</h3>
+                      <span>
+                        {" "}
+                        <a
+                          href="users"
+                          className="widget-title1"
+                          style={{ color: "black" }}
+                        >
+                          System Users{" "}
+                        </a>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -33,8 +129,12 @@ function Dashboard() {
                       <i className="fa fa-child" />
                     </span>
                     <div className="dash-widget-info text-right">
-                      <h3>1072</h3>
-                      <span className="widget-title2">Babies</span>
+                      <h3>{babies.length}</h3>
+                      <span className="widget-title2">
+                        <a href="registeredbabies" style={{ color: "black" }}>
+                          Babies
+                        </a>{" "}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -47,8 +147,12 @@ function Dashboard() {
                       <i className="fa fa-female" aria-hidden="true" />
                     </span>
                     <div className="dash-widget-info text-right">
-                      <h3>72</h3>
-                      <span className="widget-title3">Expectant Mothers</span>
+                      <h3>{mothers.length}</h3>
+                      <span className="widget-title3">
+                        <a href="/parents" style={{ color: "black" }}>
+                          Mothers
+                        </a>{" "}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -61,8 +165,13 @@ function Dashboard() {
                       <i className="fa fa-hospital-o" aria-hidden="true" />
                     </span>
                     <div className="dash-widget-info text-right">
-                      <h3>618</h3>
-                      <span className="widget-title4">Hospitals</span>
+                      <h3>{hospitals.length}</h3>
+                      <span className="widget-title4">
+                        {" "}
+                        <a href="/hospitals" style={{ color: "black" }}>
+                          Hospitals
+                        </a>{" "}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -73,10 +182,10 @@ function Dashboard() {
                   <div className="card" style={{ boxShadow: "2px 2px" }}>
                     <div className="card-header">
                       <h4 className="card-title d-inline-block">
-                        Registerd Babies
+                        Sample Registerd Babies
                       </h4>
                       <a
-                        href="babies.html"
+                        href="/registeredbabies"
                         className="btn btn-primary float-right"
                       >
                         View all
@@ -93,121 +202,37 @@ function Dashboard() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td style={{ minWidth: 200 }}>
-                                <a className="avatar" href="profile.html">
-                                  J
-                                </a>
-                                <h2>
-                                  <a href="profile.html">
-                                    Jennifer KAMALI{" "}
-                                    <span>KICUKIRO, NYARUGUNGA</span>
-                                  </a>
-                                </h2>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">
-                                  Parent's contact
-                                </h5>
-                                <p>0788317781</p>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">DOB</h5>
-                                <p>3/12/2022</p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style={{ minWidth: 200 }}>
-                                <a className="avatar" href="profile.html">
-                                  J
-                                </a>
-                                <h2>
-                                  <a href="profile.html">
-                                    Jennifer KAMALI{" "}
-                                    <span>KICUKIRO, NYARUGUNGA</span>
-                                  </a>
-                                </h2>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">
-                                  Parent's contact
-                                </h5>
-                                <p>0788317781</p>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">DOB</h5>
-                                <p>3/12/2022</p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style={{ minWidth: 200 }}>
-                                <a className="avatar" href="profile.html">
-                                  J
-                                </a>
-                                <h2>
-                                  <a href="profile.html">
-                                    Jennifer KAMALI{" "}
-                                    <span>KICUKIRO, NYARUGUNGA</span>
-                                  </a>
-                                </h2>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">
-                                  Parent's contact
-                                </h5>
-                                <p>0788317781</p>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">DOB</h5>
-                                <p>3/12/2022</p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style={{ minWidth: 200 }}>
-                                <a className="avatar" href="profile.html">
-                                  J
-                                </a>
-                                <h2>
-                                  <a href="profile.html">
-                                    Jennifer KAMALI{" "}
-                                    <span>KICUKIRO, NYARUGUNGA</span>
-                                  </a>
-                                </h2>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">
-                                  Parent's contact
-                                </h5>
-                                <p>0788317781</p>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">DOB</h5>
-                                <p>3/12/2022</p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style={{ minWidth: 200 }}>
-                                <a className="avatar" href="profile.html">
-                                  J
-                                </a>
-                                <h2>
-                                  <a href="profile.html">
-                                    Jennifer KAMALI{" "}
-                                    <span>KICUKIRO, NYARUGUNGA</span>
-                                  </a>
-                                </h2>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">
-                                  Parent's contact
-                                </h5>
-                                <p>0788317781</p>
-                              </td>
-                              <td>
-                                <h5 className="time-title p-0">DOB</h5>
-                                <p>3/12/2022</p>
-                              </td>
-                            </tr>
+                            {isFetching ? (
+                              <center>Retrieving babies ...</center>
+                            ) : (
+                              <>
+                                {babies.map((bab, index) => (
+                                  <tr>
+                                    <td style={{ minWidth: 200 }}>
+                                      <a className="avatar" href="#">
+                                        J
+                                      </a>
+                                      <h2>
+                                        <a href="#">
+                                          {bab.firstName}{" "}
+                                          <span>{bab.province}</span>
+                                        </a>
+                                      </h2>
+                                    </td>
+                                    <td>
+                                      <h5 className="time-title p-0">
+                                        Parent's contact
+                                      </h5>
+                                      <p> {bab.telephone}</p>
+                                    </td>
+                                    <td>
+                                      <h5 className="time-title p-0">DOB</h5>
+                                      <p> {bab.dateOfBirth}</p>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </>
+                            )}
                           </tbody>
                         </table>
                       </div>
@@ -223,7 +248,7 @@ function Dashboard() {
                         Expectant Mothers
                       </h4>
                       <a
-                        href="mothers.html"
+                        href="/parents"
                         className="btn btn-primary float-right"
                       >
                         View all
@@ -233,66 +258,29 @@ function Dashboard() {
                       <div className="table-responsive">
                         <table className="table mb-0 new-patient-table">
                           <tbody>
-                            <tr>
-                              <td>
-                                <img
-                                  width={28}
-                                  height={28}
-                                  className="rounded-circle"
-                                  src="assets/img/user.jpg"
-                                  alt
-                                />
-                                <h2>kamaliza Sandra</h2>
-                              </td>
-                              <td>RMH</td>
-                              <td>0788303039</td>
-                              <td>NYARUGUNGA</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <img
-                                  width={28}
-                                  height={28}
-                                  className="rounded-circle"
-                                  src="assets/img/user.jpg"
-                                  alt
-                                />
-                                <h2>kamaliza Sandra</h2>
-                              </td>
-                              <td>RMH</td>
-                              <td>0788303039</td>
-                              <td>NYARUGUNGA</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <img
-                                  width={28}
-                                  height={28}
-                                  className="rounded-circle"
-                                  src="assets/img/user.jpg"
-                                  alt
-                                />
-                                <h2>kamaliza Sandra</h2>
-                              </td>
-                              <td>RMH</td>
-                              <td>0788303039</td>
-                              <td>NYARUGUNGA</td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <img
-                                  width={28}
-                                  height={28}
-                                  className="rounded-circle"
-                                  src="assets/img/user.jpg"
-                                  alt
-                                />
-                                <h2>kamaliza Sandra</h2>
-                              </td>
-                              <td>RMH</td>
-                              <td>0788303039</td>
-                              <td>NYARUGUNGA</td>
-                            </tr>
+                            {isMotherFecthing ? (
+                              <center>Retrieving Mothers...</center>
+                            ) : (
+                              <>
+                                {mothers.map((math, index) => (
+                                  <tr>
+                                    <td>
+                                      <img
+                                        width={28}
+                                        height={28}
+                                        className="rounded-circle"
+                                        src="assets/img/user.jpg"
+                                        alt
+                                      />
+                                      <h2>{math.lastName}</h2>
+                                    </td>
+                                    <td>{math.district}</td>
+                                    <td>{math.telephone}</td>
+                                    <td>{math.registeredDate}</td>
+                                  </tr>
+                                ))}
+                              </>
+                            )}
                           </tbody>
                         </table>
                       </div>

@@ -1,7 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import Sidebar from "./sidebar";
+import { Provinces, Districts, Sectors, Cells, Villages } from "rwanda";
 
 function AddParent() {
+  const [firstName, setFirstName] = useState("");
+  const [registerDate, setRegisteredDate] = useState("");
+  const [age, setAge] = useState("");
+  const [nationalId, setNationalId] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [sector, setSector] = useState("");
+  const [cell, setCell] = useState("");
+  const [hospital, setHospital] = useState("");
+
+  const handleParents = (e) => {
+    console.log(
+      firstName,
+      nationalId,
+      age,
+      telephone,
+      province,
+      district,
+      sector,
+      cell,
+      hospital
+    );
+
+    e.preventDefault();
+    axios
+      .post("http://localhost:4040/parent/create", {
+        firstName,
+        nationalId,
+        age,
+        district,
+        cell,
+        province,
+        sector,
+        telephone,
+        hospital,
+      })
+      .then((res) => {
+        setFirstName("");
+        setDistrict("");
+        setAge("");
+        setCell("");
+        setProvince("");
+        setSector("");
+        setNationalId("");
+        setTelephone("");
+        setHospital("");
+
+        // setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        // setIsLoading(false);
+      });
+  };
+
   return (
     <div>
       <Sidebar />
@@ -21,7 +79,12 @@ function AddParent() {
                       <label>
                         Full Name <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -29,7 +92,25 @@ function AddParent() {
                       <label>
                         Age <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={age}
+                        onChange={(e) => setAge(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="col-sm-6">
+                    <div className="form-group">
+                      <label>
+                        Hospital <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={hospital}
+                        onChange={(e) => setHospital(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -37,15 +118,12 @@ function AddParent() {
                       <label>
                         National ID <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
-                        Spouse's Name <span className="text-danger">*</span>
-                      </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={nationalId}
+                        onChange={(e) => setNationalId(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -53,21 +131,16 @@ function AddParent() {
                       <label>
                         Province<span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={province}
+                        onChange={(e) => setProvince(e.target.value)}
+                      >
                         <option value>Select</option>
-                        <option value="Kigali city">Kigali city</option>
-                        <option value="Western Province">
-                          Western Province
-                        </option>
-                        <option value="Eastern Province">
-                          Eastern Province
-                        </option>
-                        <option value="southern Province">
-                          southern Province
-                        </option>
-                        <option value="Nothern Province">
-                          Nothern Province
-                        </option>
+
+                        {Provinces().map((p) => (
+                          <option>{p}</option>
+                        ))}
                       </select>
                       {/* <input class="form-control" type="text" /> */}
                     </div>
@@ -77,13 +150,15 @@ function AddParent() {
                       <label>
                         District <span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={district}
+                        onChange={(e) => setDistrict(e.target.value)}
+                      >
                         <option value>Select</option>
-                        <option value="Kigali city">option 1</option>
-                        <option value="Western Province">option 2</option>
-                        <option value="Eastern Province">option 3</option>
-                        <option value="southern Province">option 4</option>
-                        <option value="Nothern Province">option 5</option>
+                        {Districts(province).map((p) => (
+                          <option>{p}</option>
+                        ))}
                       </select>
                       {/* <input class="form-control" type="text" /> */}
                     </div>
@@ -93,13 +168,19 @@ function AddParent() {
                       <label>
                         Sector<span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={sector}
+                        onChange={(e) => setSector(e.target.value)}
+                      >
                         <option value>Select</option>
-                        <option value="Kigali city">option 1</option>
-                        <option value="Western Province">option 2</option>
-                        <option value="Eastern Province">option 3</option>
-                        <option value="southern Province">option 4</option>
-                        <option value="Nothern Province">option 5</option>
+                        {district && (
+                          <>
+                            {Sectors(province, district).map((p) => (
+                              <option>{p}</option>
+                            ))}
+                          </>
+                        )}
                       </select>
                       {/* <input class="form-control" type="text" /> */}
                     </div>
@@ -110,13 +191,19 @@ function AddParent() {
                         Cell<span className="text-danger">*</span>
                       </label>
                       {/* <input class="form-control" type="text" /> */}
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        name={cell}
+                        onChange={(e) => setCell(e.target.value)}
+                      >
                         <option value>Select</option>
-                        <option value="Kigali city">option 1</option>
-                        <option value="Western Province">option 2</option>
-                        <option value="Eastern Province">option 3</option>
-                        <option value="southern Province">option 4</option>
-                        <option value="Nothern Province">option 5</option>
+                        {sector && (
+                          <>
+                            {Cells(province, district, sector).map((p) => (
+                              <option>{p}</option>
+                            ))}
+                          </>
+                        )}
                       </select>
                     </div>
                   </div>
@@ -125,51 +212,28 @@ function AddParent() {
                       <label>
                         Phone number <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        name={telephone}
+                        onChange={(e) => setTelephone(e.target.value)}
+                      />
                     </div>
                   </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
-                        Hospital <span className="text-danger">*</span>
-                      </label>
-                      <input className="form-control" type="text" />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
-                        Today's Date<span className="text-danger">*</span>
-                      </label>
-                      <div className="cal-icon">
-                        <input
-                          type="text"
-                          className="form-control datetimepicker"
-                        />
-                      </div>
-                    </div>
-                  </div>
+
                   {/* TODO TODO TODO TODO */}
                   {/*FIXME FIXME FIXME FIXME */}
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
-                        CheckUP Date<span className="text-danger">*</span>
-                      </label>
-                      <div className="cal-icon">
-                        <input
-                          type="text"
-                          className="form-control datetimepicker"
-                        />
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </form>
             </div>
           </div>
           <div className="m-t-20 text-center">
-            <button className="btn btn-primary submit-btn">ADD MOTHER</button>
+            <button
+              className="btn btn-primary submit-btn"
+              onClick={handleParents}
+            >
+              ADD MOTHER
+            </button>
           </div>
         </div>
       </div>

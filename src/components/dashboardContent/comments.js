@@ -1,7 +1,44 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 import Sidebar from "./sidebar";
-
 function Comments() {
+  const [comments, setComments] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [notification, setNotification] = useState([]);
+  const [isNotificationFetching, setIsNotificationFetching] = useState(false);
+
+  const fetchNotifications = () => {
+    setIsNotificationFetching(true);
+    axios
+      .get("http://localhost:4040/notification/all")
+      .then((res) => {
+        setNotification(res.data.data);
+        setIsNotificationFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsNotificationFetching(false);
+      });
+  };
+  const fetchComments = () => {
+    setIsFetching(true);
+    axios
+      .get("http://localhost:4040/comment/all")
+      .then((res) => {
+        setComments(res.data.data);
+        setIsFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsFetching(false);
+      });
+  };
+  useEffect(() => {
+    fetchComments();
+    fetchNotifications();
+  }, []);
+
   return (
     <div>
       <Sidebar />
@@ -10,9 +47,10 @@ function Comments() {
           <div className="content">
             <div className="row">
               <div className="col-sm-4 col-3">
-                <h4 className="page-title">Comments from the Websiite</h4>
+                <h4 className="page-title">Comments from the Website</h4>
               </div>
             </div>
+
             <div className="row">
               <div className="col-md-12">
                 <div className="table-responsive">
@@ -26,44 +64,127 @@ function Comments() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <img
-                            width={28}
-                            height={28}
-                            src="assets/img/user.jpg"
-                            className="rounded-circle m-r-5"
-                            alt
-                          />{" "}
-                          Carine UMUTESI
-                        </td>
-                        <td>carine@gmail.com</td>
-                        <td>i really like this web</td>
-                        <td className="text-right">
-                          <div className="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              className="action-icon dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <i className="fa fa-ellipsis-v" />
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#delete_schedule"
-                              >
-                                <i className="fa fa-trash-o m-r-5" /> Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
+                      {isFetching ? (
+                        <center
+                          style={{ paddingTop: "80px", paddingLeft: "60px" }}
+                        >
+                          <CircularProgress />
+                        </center>
+                      ) : (
+                        <>
+                          {comments.map((comm, index) => (
+                            <tr>
+                              <td>
+                                <img
+                                  width={28}
+                                  height={28}
+                                  src="assets/img/user.jpg"
+                                  className="rounded-circle m-r-5"
+                                  alt
+                                />{" "}
+                                {comm.fullName}
+                              </td>
+                              <td>{comm.email}</td>
+                              <td>{comm.comment}</td>
+                              <td className="text-right">
+                                <div className="dropdown dropdown-action">
+                                  <a
+                                    href="#"
+                                    className="action-icon dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="fa fa-ellipsis-v" />
+                                  </a>
+                                  <div className="dropdown-menu dropdown-menu-right">
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      data-toggle="modal"
+                                      data-target="#delete_schedule"
+                                    >
+                                      <i className="fa fa-trash-o m-r-5" />{" "}
+                                      Delete
+                                    </a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </>
+                      )}
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+            <div className="notifications">
+              <h2>This is Agent </h2>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="table-responsive">
+                    <table className="table table-border table-striped custom-table mb-0">
+                      <thead>
+                        <tr>
+                          <th>notifiaction Id</th>
+                          <th>status</th>
+                          <th>Notification content</th>
+                          <th>to</th>
+                          <th className="text-right">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {isNotificationFetching ? (
+                          <center style={{ paddingTop: "50px" }}>
+                            <CircularProgress />
+                          </center>
+                        ) : (
+                          <>
+                            {notification.map((notify, index) => (
+                              <tr>
+                                <td>
+                                  <img
+                                    width={28}
+                                    height={28}
+                                    src="assets/img/user.jpg"
+                                    className="rounded-circle m-r-5"
+                                    alt
+                                  />{" "}
+                                  <p>{index + 1}</p>
+                                </td>
+                                <td>{notify.status}</td>
+                                <td>{notify.notificationContent}</td>
+                                <td>{notify.to}</td>
+                                <td className="text-right">
+                                  <div className="dropdown dropdown-action">
+                                    <a
+                                      href="#"
+                                      className="action-icon dropdown-toggle"
+                                      data-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i className="fa fa-ellipsis-v" />
+                                    </a>
+                                    <div className="dropdown-menu dropdown-menu-right">
+                                      <a
+                                        className="dropdown-item"
+                                        href="#"
+                                        data-toggle="modal"
+                                        data-target="#delete_schedule"
+                                      >
+                                        <i className="fa fa-trash-o m-r-5" />{" "}
+                                        Delete
+                                      </a>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

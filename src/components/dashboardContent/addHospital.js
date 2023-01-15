@@ -1,7 +1,46 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import Sidebar from "./sidebar";
 
 function AddHospital() {
+  const [name, setName] = useState("");
+  const [district, setDistrict] = useState("");
+  const [cell, setCell] = useState("");
+  const [province, setProvince] = useState("");
+  const [sector, setSector] = useState("");
+  const [director, setDirector] = useState("");
+  const [hotline, setHotline] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleAdHospital = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    // console.log(name, district, cell, province, sector, director, hotline);
+    axios
+      .post("http://localhost:4040/hospital/register", {
+        name,
+        district,
+        cell,
+        province,
+        sector,
+        director,
+        hotline,
+      })
+      .then((res) => {
+        setName("");
+        setDistrict("");
+        setCell("");
+        setProvince("");
+        setSector("");
+        setDirector("");
+        setHotline("");
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  };
   return (
     <div>
       <Sidebar />
@@ -19,17 +58,14 @@ function AddHospital() {
                   <div className="col-sm-6">
                     <div className="form-group">
                       <label>
-                        ID <span className="text-danger">*</span>
-                      </label>
-                      <input className="form-control" type="text" />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
                         Name <span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -37,7 +73,11 @@ function AddHospital() {
                       <label>
                         Province<span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        value={province}
+                        onChange={(e) => setProvince(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">Kigali city</option>
                         <option value="Western Province">
@@ -61,7 +101,11 @@ function AddHospital() {
                       <label>
                         District <span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        value={district}
+                        onChange={(e) => setDistrict(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">option 1</option>
                         <option value="Western Province">option 2</option>
@@ -77,7 +121,11 @@ function AddHospital() {
                       <label>
                         Sector<span className="text-danger">*</span>
                       </label>
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        value={sector}
+                        onChange={(e) => setSector(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">option 1</option>
                         <option value="Western Province">option 2</option>
@@ -94,7 +142,11 @@ function AddHospital() {
                         Cell<span className="text-danger">*</span>
                       </label>
                       {/* <input class="form-control" type="text" /> */}
-                      <select className="form-control">
+                      <select
+                        className="form-control"
+                        value={cell}
+                        onChange={(e) => setCell(e.target.value)}
+                      >
                         <option value>Select</option>
                         <option value="Kigali city">option 1</option>
                         <option value="Western Province">option 2</option>
@@ -109,7 +161,12 @@ function AddHospital() {
                       <label>
                         Hotline<span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={hotline}
+                        onChange={(e) => setHotline(e.target.value)}
+                      />
                     </div>
                   </div>
                   <div className="col-sm-6">
@@ -117,13 +174,21 @@ function AddHospital() {
                       <label>
                         Director<span className="text-danger">*</span>
                       </label>
-                      <input className="form-control" type="text" />
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={director}
+                        onChange={(e) => setDirector(e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
                 <div className="m-t-20 text-center">
-                  <button className="btn btn-primary submit-btn">
-                    ADD HOSPITAL
+                  <button
+                    className="btn btn-primary submit-btn"
+                    onClick={handleAdHospital}
+                  >
+                    {isLoading ? "saving..." : "ADD HOSPITAL"}
                   </button>
                 </div>
               </form>

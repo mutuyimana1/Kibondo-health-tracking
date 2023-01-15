@@ -24,7 +24,7 @@ function BlogView() {
             <div className="col-sm-6 col-md-6 col-lg-4">
               <div className="blog grid-blog">
                 <div className="blog-image">
-                  <a href="blog-details.html">
+                  <a href="#">
                     <img
                       className="img-fluid"
                       src="assets/img/blog/blog-01.jpg"
@@ -34,9 +34,7 @@ function BlogView() {
                 </div>
                 <div className="blog-content">
                   <h3 className="blog-title">
-                    <a href="blog-details.html">
-                      Do You Know the ABCs of Health Care?
-                    </a>
+                    <a href="#">Do You Know the ABCs of Health Care?</a>
                   </h3>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur em adipiscing elit,
@@ -44,7 +42,7 @@ function BlogView() {
                     magna aliqua. Ut enim ad minim veniam, quis nostrud
                     exercitation ullamco sit laboris.
                   </p>
-                  <a href="blog-details.html" className="read-more">
+                  <a href="#" className="read-more">
                     <i className="fa fa-long-arrow-right" /> Read More
                   </a>
                   <div className="blog-info clearfix">
@@ -78,7 +76,7 @@ function BlogView() {
             <div className="col-sm-6 col-md-6 col-lg-4">
               <div className="blog grid-blog">
                 <div className="blog-image">
-                  <a href="blog-details.html">
+                  <a href="#">
                     <img
                       className="img-fluid"
                       src="assets/img/blog/blog-02.jpg"
@@ -88,9 +86,7 @@ function BlogView() {
                 </div>
                 <div className="blog-content">
                   <h3 className="blog-title">
-                    <a href="blog-details.html">
-                      Do You Know the ABCs of Health Care?
-                    </a>
+                    <a href="#">Do You Know the ABCs of Health Care?</a>
                   </h3>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur em adipiscing elit,
@@ -98,7 +94,7 @@ function BlogView() {
                     magna aliqua. Ut enim ad minim veniam, quis nostrud
                     exercitation ullamco sit laboris.
                   </p>
-                  <a href="blog-details.html" className="read-more">
+                  <a href="#" className="read-more">
                     <i className="fa fa-long-arrow-right" /> Read More
                   </a>
                   <div className="blog-info clearfix">
@@ -132,7 +128,7 @@ function BlogView() {
             <div className="col-sm-6 col-md-6 col-lg-4">
               <div className="blog grid-blog">
                 <div className="blog-image">
-                  <a href="blog-details.html">
+                  <a href="#">
                     <img
                       className="img-fluid"
                       src="assets/img/blog/blog-03.jpg"
@@ -142,9 +138,7 @@ function BlogView() {
                 </div>
                 <div className="blog-content">
                   <h3 className="blog-title">
-                    <a href="blog-details.html">
-                      Do You Know the ABCs of Health Care?
-                    </a>
+                    <a href="#">Do You Know the ABCs of Health Care?</a>
                   </h3>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur em adipiscing elit,
@@ -152,7 +146,7 @@ function BlogView() {
                     magna aliqua. Ut enim ad minim veniam, quis nostrud
                     exercitation ullamco sit laboris.
                   </p>
-                  <a href="blog-details.html" className="read-more">
+                  <a href="#" className="read-more">
                     <i className="fa fa-long-arrow-right" /> Read More
                   </a>
                   <div className="blog-info clearfix">
@@ -186,7 +180,7 @@ function BlogView() {
             <div className="col-sm-6 col-md-6 col-lg-4">
               <div className="blog grid-blog">
                 <div className="blog-image">
-                  <a href="blog-details.html">
+                  <a href="#">
                     <img
                       className="img-fluid"
                       src="assets/img/blog/blog-04.jpg"
@@ -196,9 +190,7 @@ function BlogView() {
                 </div>
                 <div className="blog-content">
                   <h3 className="blog-title">
-                    <a href="blog-details.html">
-                      Do You Know the ABCs of Health Care?
-                    </a>
+                    <a href="#">Do You Know the ABCs of Health Care?</a>
                   </h3>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur em adipiscing elit,
@@ -206,7 +198,7 @@ function BlogView() {
                     magna aliqua. Ut enim ad minim veniam, quis nostrud
                     exercitation ullamco sit laboris.
                   </p>
-                  <a href="blog-details.html" className="read-more">
+                  <a href="#" className="read-more">
                     <i className="fa fa-long-arrow-right" /> Read More
                   </a>
                   <div className="blog-info clearfix">

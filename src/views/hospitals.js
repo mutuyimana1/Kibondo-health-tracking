@@ -1,7 +1,27 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/dashboardContent/sidebar";
-
+import { CircularProgress } from "@mui/material";
 function Hospitals() {
+  const [hospitals, setHospitals] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const fetchHospitals = () => {
+    setIsFetching(true);
+    axios
+      .get("http://localhost:4040/hospital/hospitals")
+      .then((res) => {
+        setHospitals(res.data.data);
+        setIsFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsFetching(false);
+      });
+  };
+  useEffect(() => {
+    fetchHospitals();
+  }, []);
+
   return (
     <div>
       <Sidebar />
@@ -14,7 +34,7 @@ function Hospitals() {
               </div>
               <div className="col-sm-8 col-9 text-right m-b-20">
                 <a
-                  href="add hospital.html"
+                  href="/addhospital"
                   className="btn btn btn-primary btn-rounded float-right"
                 >
                   <i className="fa fa-plus" /> Add Hospital
@@ -27,7 +47,8 @@ function Hospitals() {
                   <table className="table table-striped custom-table">
                     <thead>
                       <tr>
-                        <th>ID</th>
+                        <th>#</th>
+
                         <th>Name</th>
                         <th>Province</th>
                         <th>District</th>
@@ -39,82 +60,55 @@ function Hospitals() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td> HPTL 001</td>
-                        <td>RMH</td>
-                        <td>Kigali</td>
-                        <td>Kicukiro</td>
-                        <td>Nyarugunga</td>
-                        <td>Kamashashi</td>
-                        <td>200754</td>
-                        <td>DR COL. DODO TWAHIRWA</td>
-                        <td className="text-right">
-                          <div className="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              className="action-icon dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <i className="fa fa-ellipsis-v" />
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <a
-                                className="dropdown-item"
-                                href="edit hospital.html"
-                              >
-                                <i className="fa fa-pencil m-r-5" /> Edit
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#delete_appointment"
-                              >
-                                <i className="fa fa-trash-o m-r-5" /> Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> HPTL 001</td>
-                        <td>RMH</td>
-                        <td>Kigali</td>
-                        <td>Kicukiro</td>
-                        <td>Nyarugunga</td>
-                        <td>Kamashashi</td>
-                        <td>200754</td>
-                        <td>DR COL. DODO TWAHIRWA</td>
-                        <td className="text-right">
-                          <div className="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              className="action-icon dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <i className="fa fa-ellipsis-v" />
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <a
-                                className="dropdown-item"
-                                href="edit hospital.html"
-                              >
-                                <i className="fa fa-pencil m-r-5" /> Edit
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#delete_appointment"
-                              >
-                                <i className="fa fa-trash-o m-r-5" /> Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
+                      {isFetching ? (
+                        <center
+                          style={{ paddingTop: "100px", paddingLeft: "250px" }}
+                        >
+                          <CircularProgress />
+                        </center>
+                      ) : (
+                        <>
+                          {hospitals.map((hosp, index) => (
+                            <tr key={index}>
+                              <td> {index + 1}</td>
+                              <td>{hosp.name}</td>
+                              <td>{hosp.province}</td>
+                              <td>{hosp.district}</td>
+                              <td>{hosp.sector}</td>
+                              <td>{hosp.cell}</td>
+                              <td>{hosp.director}</td>
+                              <td>{hosp.hotline}</td>
+
+                              <td className="text-right">
+                                <div className="dropdown dropdown-action">
+                                  <a
+                                    href="#"
+                                    className="action-icon dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="fa fa-ellipsis-v" />
+                                  </a>
+                                  <div className="dropdown-menu dropdown-menu-right">
+                                    <a className="dropdown-item" href="#">
+                                      <i className="fa fa-pencil m-r-5" /> Edit
+                                    </a>
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      data-toggle="modal"
+                                      data-target="#delete_appointment"
+                                    >
+                                      <i className="fa fa-trash-o m-r-5" />{" "}
+                                      Delete
+                                    </a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </>
+                      )}
                     </tbody>
                   </table>
                 </div>

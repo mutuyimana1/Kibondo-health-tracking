@@ -1,7 +1,28 @@
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./sidebar";
+import CircularProgress from "@mui/material/CircularProgress";
+function Parents() {
+  const [parents, setParents] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const fetchParents = () => {
+    setIsFetching(true);
+    axios
+      .get("http://localhost:4040/Parent/all")
+      .then((res) => {
+        setParents(res.data.data);
+        console.log(res);
+        setIsFetching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsFetching(false);
+      });
+  };
+  useEffect(() => {
+    fetchParents();
+  }, []);
 
-function Mathers() {
   return (
     <div>
       <Sidebar />
@@ -14,7 +35,7 @@ function Mathers() {
               </div>
               <div className="col-sm-8 col-9 text-right m-b-20">
                 <a
-                  href="add mother.html"
+                  href="#"
                   className="btn btn btn-primary btn-rounded float-right"
                 >
                   <i className="fa fa-plus" /> Add Mother
@@ -36,112 +57,72 @@ function Mathers() {
                         <th>Sector</th>
                         <th>cell</th>
                         <th>Hospital</th>
-                        <th>Today's Date</th>
-                        <th>CheckUP date</th>
+                        <th>Registered Date</th>
+
                         <th className="text-right">Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>
-                          <img
-                            width={28}
-                            height={28}
-                            src="assets/img/user.jpg"
-                            className="rounded-circle m-r-5"
-                            alt
-                          />{" "}
-                          Denise MUHORAKEYE
-                        </td>
-                        <td>35</td>
-                        <td>0788400878</td>
-                        <td>1199880155756028</td>
-                        <td>Kigali</td>
-                        <td>Kicukiro</td>
-                        <td>Nyarugunga</td>
-                        <td>Nonko</td>
-                        <td>RMH</td>
-                        <td>12/11/2022</td>
-                        <td>1/01/2023</td>
-                        <td className="text-right">
-                          <div className="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              className="action-icon dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <i className="fa fa-ellipsis-v" />
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <a
-                                className="dropdown-item"
-                                href="edit mother.html"
-                              >
-                                <i className="fa fa-pencil m-r-5" /> Edit
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#delete_appointment"
-                              >
-                                <i className="fa fa-trash-o m-r-5" /> Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <img
-                            width={28}
-                            height={28}
-                            src="assets/img/user.jpg"
-                            className="rounded-circle m-r-5"
-                            alt
-                          />{" "}
-                          Denise MUHORAKEYE
-                        </td>
-                        <td>35</td>
-                        <td>0788400878</td>
-                        <td>1199880155756028</td>
-                        <td>Kigali</td>
-                        <td>Kicukiro</td>
-                        <td>Nyarugunga</td>
-                        <td>Nonko</td>
-                        <td>Rwanda military Hospital</td>
-                        <td>12/11/2022</td>
-                        <td>1/01/2023</td>
-                        <td className="text-right">
-                          <div className="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              className="action-icon dropdown-toggle"
-                              data-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              <i className="fa fa-ellipsis-v" />
-                            </a>
-                            <div className="dropdown-menu dropdown-menu-right">
-                              <a
-                                className="dropdown-item"
-                                href="edit mother.html"
-                              >
-                                <i className="fa fa-pencil m-r-5" /> Edit
-                              </a>
-                              <a
-                                className="dropdown-item"
-                                href="#"
-                                data-toggle="modal"
-                                data-target="#delete_appointment"
-                              >
-                                <i className="fa fa-trash-o m-r-5" /> Delete
-                              </a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
+                      {isFetching ? (
+                        <center
+                          style={{ paddingTop: "100px", paddingLeft: "250px" }}
+                        >
+                          <CircularProgress />
+                        </center>
+                      ) : (
+                        <>
+                          {parents.map((pare, index) => (
+                            <tr key={index}>
+                              <td>
+                                <img
+                                  width={28}
+                                  height={28}
+                                  src="assets/img/user.jpg"
+                                  className="rounded-circle m-r-5"
+                                  alt=""
+                                />{" "}
+                                {pare.firstName}
+                                {/* {`${pare.firstName} ${pare.secondName}`} */}
+                              </td>
+                              <td>{pare.age}</td>
+                              <td>{pare.telephone}</td>
+                              <td>{pare.nationalId}</td>
+                              <td>{pare.province}</td>
+                              <td>{pare.district}</td>
+                              <td>{pare.sector}</td>
+                              <td>{pare.cell}</td>
+                              <td>{pare.hospital}</td>
+                              <td>{pare.registeredDate}</td>
+                              <td className="text-right">
+                                <div className="dropdown dropdown-action">
+                                  <a
+                                    href="#"
+                                    className="action-icon dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    aria-expanded="false"
+                                  >
+                                    <i className="fa fa-ellipsis-v" />
+                                  </a>
+                                  <div className="dropdown-menu dropdown-menu-right">
+                                    <a className="dropdown-item" href="#">
+                                      <i className="fa fa-pencil m-r-5" /> Edit
+                                    </a>
+                                    <a
+                                      className="dropdown-item"
+                                      href="#"
+                                      data-toggle="modal"
+                                      data-target="#delete_appointment"
+                                    >
+                                      <i className="fa fa-trash-o m-r-5" />{" "}
+                                      Delete
+                                    </a>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -157,7 +138,7 @@ function Mathers() {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-body text-center">
-                <img src="assets/img/sent.png" alt width={50} height={46} />
+                <img src="assets/img/sent.png" alt="" width={50} height={46} />
                 <h3>Are you sure want to delete this mother?</h3>
                 <div className="m-t-20">
                   {" "}
@@ -177,4 +158,4 @@ function Mathers() {
   );
 }
 
-export default Mathers;
+export default Parents;

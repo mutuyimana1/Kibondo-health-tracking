@@ -14,6 +14,8 @@ import Comments from "../components/dashboardContent/comments";
 import Hospitals from "../views/hospitals";
 import Mathers from "../components/dashboardContent/mathers";
 import Services from "../views/services";
+import Blogs from "../views/blogs";
+import RegisteredUsers from "../components/dashboardContent/users";
 
 function Index() {
   return (
@@ -32,6 +34,9 @@ function Index() {
       <Route path="/bmiresults" element={<BmiResult />} />
       <Route path="/comments" element={<Comments />} />
       <Route path="/hospitals" element={<Hospitals />} />
+      <Route path="/blogs" element={<Blogs />} />
+      <Route path="/users" element={<RegisteredUsers />} />
+      <Route path="/blogs/:category" element={<Blogs />} />
     </Routes>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../views/home.css";
 import image3 from "../assets/images/pexels-photo-6577508.jpeg";
 import Box from "@mui/material/Box";
@@ -7,6 +7,10 @@ import { TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import CloseCircleOutlined from "@ant-design/icons";
+import { registerUserAction, loginUserAction } from "../redux/auth/actions";
+import { useNavigate } from "react-router-dom";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { useDispatch, useSelector } from "react-redux";
 const style = {
   position: "absolute",
   top: "50%",
@@ -40,13 +44,29 @@ function Header() {
     setOpenModal(false);
   };
 
-  //   let popup = document.getElementById("popup");
-  //   function openpopup() {
-  //     popup.classList.add("open-popup");
-  //   }
-  //   function closepopup() {
-  //     popup.classList.remove("open-popup");
-  //   }
+  const [firstName, setFirstName] = useState();
+  const [secondName, setSecondName] = useState();
+  const [password, setPassword] = useState();
+  const [conformPassword, setConfirmPassword] = useState();
+  const [hospitalName, setHospitalName] = useState();
+  const [telephone, setTelephone] = useState();
+  const [gender, setGender] = useState();
+  const [position, setPosition] = useState();
+  const [emailLogin, setEmailLogin] = useState("");
+  const [passwordLogin, setPasswordLogin] = useState();
+  const [email, setEmail] = useState();
+  const dispatch = useDispatch();
+  const { token, isFetching } = useSelector((state) => state?.auth);
+  const navigate = useNavigate();
+  const login = () => {
+    loginUserAction({ emailLogin, passwordLogin })(dispatch);
+  };
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token]);
+
   return (
     <div>
       {/* <div className="login-container">
@@ -81,12 +101,14 @@ function Header() {
                     label="Enter Email"
                     variant="outlined"
                     sx={{ marginBottom: "20px", marginTop: "30px" }}
+                    onChange={(e) => setEmailLogin(e.target.value)}
                   />
 
                   <TextField
                     id="outlined-basic"
                     label="Enter password"
                     variant="outlined"
+                    onChange={(e) => setPasswordLogin(e.target.value)}
                   />
 
                   <div className="col-12">
@@ -107,19 +129,24 @@ function Header() {
                       Register
                     </a>
                     {/*FIXME FIXME TODO TODO*/}
-                    <button
+                    {/* <button
                       className="btn btn-primary w-100 py-3"
-                      type="submit"
+                      // type="submit"
                       style={{ marginTop: "20px" }}
+                    > */}
+                    <LoadingButton
+                      // href="/dashboard"
+                      loading={isFetching}
+                      onClick={() => {
+                        console.log({ emailLogin, passwordLogin });
+                        login();
+                      }}
+                      className="btn btn-primary"
+                      style={{ fontSize: "20px" }}
                     >
-                      <a
-                        href="/dashboard"
-                        className="btn btn-primary"
-                        style={{ fontSize: "20px" }}
-                      >
-                        Login
-                      </a>
-                    </button>
+                      Login
+                    </LoadingButton>
+                    {/* </button> */}
                   </div>
                 </div>
               </form>
@@ -148,6 +175,7 @@ function Header() {
                       label="Enter first name"
                       variant="outlined"
                       sx={{ marginBottom: "20px", width: "300px" }}
+                      onChange={(e) => setFirstName(e.target.value)}
                     />
 
                     <TextField
@@ -155,6 +183,7 @@ function Header() {
                       label="Enter second name"
                       variant="outlined"
                       sx={{ marginLeft: "20px", width: "300px" }}
+                      onChange={(e) => setSecondName(e.target.value)}
                     />
                   </div>
                   <div style={{ display: "flex" }}>
@@ -163,6 +192,7 @@ function Header() {
                       label="Hospital name"
                       variant="outlined"
                       sx={{ marginBottom: "20px", width: "300px" }}
+                      onChange={(e) => setHospitalName(e.target.value)}
                     />
 
                     <TextField
@@ -170,6 +200,7 @@ function Header() {
                       label="your position"
                       variant="outlined"
                       sx={{ marginLeft: "20px", width: "300px" }}
+                      onChange={(e) => setPosition(e.target.value)}
                     />
                   </div>
                   <div style={{ display: "flex" }}>
@@ -178,6 +209,7 @@ function Header() {
                       label="Enter phone number"
                       variant="outlined"
                       sx={{ marginBottom: "20px", width: "300px" }}
+                      onChange={(e) => setTelephone(e.target.value)}
                     />
 
                     <TextField
@@ -185,6 +217,7 @@ function Header() {
                       label="Enter Email"
                       variant="outlined"
                       sx={{ marginLeft: "20px", width: "300px" }}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div style={{ display: "flex" }}>
@@ -193,6 +226,7 @@ function Header() {
                       label="Enter password"
                       variant="outlined"
                       sx={{ marginBottom: "20px", width: "300px" }}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
 
                     <TextField
@@ -200,8 +234,16 @@ function Header() {
                       label="confirm password"
                       variant="outlined"
                       sx={{ marginLeft: "20px", width: "300px" }}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                   </div>
+                  <TextField
+                    id="outlined-basic"
+                    label="enter your gender"
+                    variant="outlined"
+                    sx={{ marginLeft: "20px", width: "300px" }}
+                    onChange={(e) => setGender(e.target.value)}
+                  />
 
                   <div className="col-12">
                     &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
@@ -227,16 +269,43 @@ function Header() {
                     {/*FIXME FIXME TODO TODO*/}
                     <button
                       className="btn btn-primary w-100 py-3"
-                      type="submit"
+                      // type="submit"
                       style={{ marginTop: "20px" }}
                     >
-                      <a
-                        href="/dashboard"
+                      <LoadingButton
+                        // href="/dashboard"
+
+                        loading={isFetching}
                         className="btn btn-primary"
                         style={{ fontSize: "20px" }}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          console.log({
+                            firstName,
+                            secondName,
+                            email,
+                            telephone,
+                            password,
+                            conformPassword,
+                            hospitalName,
+                            position,
+                            gender,
+                          });
+                          registerUserAction({
+                            firstName,
+                            secondName,
+                            email,
+                            telephone,
+                            password,
+                            conformPassword,
+                            hospitalName,
+                            position,
+                            gender,
+                          })(dispatch);
+                        }}
                       >
                         Register
-                      </a>
+                      </LoadingButton>
                     </button>
                   </div>
                 </div>
@@ -252,7 +321,7 @@ function Header() {
               <div className="d-inline-flex align-items-center">
                 <a className="text-decoration-none text-body pe-3" href>
                   <i className="bi bi-telephone me-2" />
-                  +250 345 6789
+                  +250 782099213
                 </a>
                 <span className="text-body">|</span>
                 <a className="text-decoration-none text-body px-3" href>
@@ -284,7 +353,7 @@ function Header() {
       <div className="container-fluid sticky-top bg-white shadow-sm">
         <div className="container">
           <nav className="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-            <a href="index.html" className="navbar-brand">
+            <a href="/" className="navbar-brand">
               <h1 className="m-0 text-uppercase text-primary">Ikibondo</h1>
             </a>
             <button
@@ -312,19 +381,19 @@ function Header() {
                     Pages
                   </a>
                   <div className="dropdown-menu m-0">
-                    <a href="blog.html" className="dropdown-item">
+                    <a href="/blogs" className="dropdown-item">
                       Blog Grid
                     </a>
-                    <a href="/bmiresults" className="dropdown-item">
+                    <a href="#" className="dropdown-item">
                       BMI Results
                     </a>
-                    <a href="team.html" className="dropdown-item">
+                    <a href="#" className="dropdown-item">
                       The Team
                     </a>
-                    <a href="testimonial.html" className="dropdown-item">
+                    <a href="#" className="dropdown-item">
                       Testimonial
                     </a>
-                    <a href="measure.html" className="dropdown-item">
+                    <a href="#" className="dropdown-item">
                       Health measure
                     </a>
                   </div>
@@ -332,18 +401,22 @@ function Header() {
                 <a href="/contactus" className="nav-item nav-link">
                   Contact
                 </a>
-                <div className="nav-item">
-                  <a onClick={handleOpen} href="#" className="nav-link ">
+                <div className="nav-item dropdown">
+                  <a
+                    href="#"
+                    className="nav-link dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                  >
                     Register/Login
                   </a>
-                  {/* <div className="dropdown-menu m-0">
+                  <div className="dropdown-menu m-0">
                     <a className="dropdown-item" onClick={handleOpen}>
                       Nurse/Doctor
                     </a>
                     <a className="dropdown-item" onClick={handleOpen}>
                       User
                     </a>
-                  </div> */}
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,6 +1,29 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 function Footer() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
+
+  const handleComment = (e) => {
+    e.preventDefault();
+    console.log(fullName, email, comment);
+    axios
+      .post("http://localhost:4040/comment/create", {
+        fullName,
+        email,
+        comment,
+      })
+      .then((e) => {
+        setFullName("");
+        setEmail("");
+        setComment("");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <div>
@@ -72,12 +95,16 @@ function Footer() {
                       type="text"
                       className="form-control p-3 border-0"
                       placeholder="Your name"
+                      name={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
                     />
                     <br />
                     <input
                       type="text"
                       className="form-control p-3 border-0"
                       placeholder="Your Email Address"
+                      name={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <br />
                     <textarea
@@ -86,9 +113,13 @@ function Footer() {
                       placeholder="Your comment"
                       rows={3}
                       defaultValue={""}
+                      name={comment}
+                      onChange={(e) => setComment(e.target.value)}
                     />
                     <br />
-                    <button className="btn btn-primary">SUBMIT</button>
+                    <button className="btn btn-primary" onClick={handleComment}>
+                      SUBMIT
+                    </button>
                   </div>
                 </form>
               </div>
