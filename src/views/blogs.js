@@ -75,6 +75,7 @@ function Blogs({ data }) {
                             {bro.blogName}
                           </a>
                           <p className="m-0">{bro.blogContent}</p>
+                          <p>{blogs.publishedDate}</p>
                         </div>
                       </div>
                       <div className="col-12 text-center">
