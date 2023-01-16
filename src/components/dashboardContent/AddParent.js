@@ -76,9 +76,7 @@ function AddParent() {
                 <div className="row">
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Full Name <span className="text-danger">*</span>
-                      </label>
+                      <label>Full Name</label>
                       <input
                         className="form-control"
                         type="text"
@@ -87,24 +85,10 @@ function AddParent() {
                       />
                     </div>
                   </div>
+
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Age <span className="text-danger">*</span>
-                      </label>
-                      <input
-                        className="form-control"
-                        type="text"
-                        name={age}
-                        onChange={(e) => setAge(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-sm-6">
-                    <div className="form-group">
-                      <label>
-                        Hospital <span className="text-danger">*</span>
-                      </label>
+                      <label>Hospital</label>
                       <input
                         className="form-control"
                         type="text"
@@ -115,9 +99,7 @@ function AddParent() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        National ID <span className="text-danger">*</span>
-                      </label>
+                      <label>National ID</label>
                       <input
                         className="form-control"
                         type="text"
@@ -128,9 +110,7 @@ function AddParent() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Province<span className="text-danger">*</span>
-                      </label>
+                      <label>Province</label>
                       <select
                         className="form-control"
                         name={province}
@@ -147,9 +127,7 @@ function AddParent() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        District <span className="text-danger">*</span>
-                      </label>
+                      <label>District</label>
                       <select
                         className="form-control"
                         name={district}
@@ -165,9 +143,7 @@ function AddParent() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Sector<span className="text-danger">*</span>
-                      </label>
+                      <label>Sector</label>
                       <select
                         className="form-control"
                         name={sector}
@@ -187,9 +163,7 @@ function AddParent() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Cell<span className="text-danger">*</span>
-                      </label>
+                      <label>Cell</label>
                       {/* <input class="form-control" type="text" /> */}
                       <select
                         className="form-control"
@@ -209,9 +183,7 @@ function AddParent() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Phone number <span className="text-danger">*</span>
-                      </label>
+                      <label>Phone number</label>
                       <input
                         className="form-control"
                         type="text"

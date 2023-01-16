@@ -16,7 +16,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 550,
+  width: 600,
   bgcolor: "background.paper",
   border: "2px solid #000",
   borderRadius: "10px",
@@ -107,6 +107,7 @@ function Header() {
                   <TextField
                     id="outlined-basic"
                     label="Enter password"
+                    type="password"
                     variant="outlined"
                     onChange={(e) => setPasswordLogin(e.target.value)}
                   />
@@ -223,6 +224,7 @@ function Header() {
                   <div style={{ display: "flex" }}>
                     <TextField
                       id="outlined-basic"
+                      type="password"
                       label="Enter password"
                       variant="outlined"
                       sx={{ marginBottom: "20px", width: "300px" }}
@@ -231,6 +233,7 @@ function Header() {
 
                     <TextField
                       id="outlined-basic"
+                      type="password"
                       label="confirm password"
                       variant="outlined"
                       sx={{ marginLeft: "20px", width: "300px" }}

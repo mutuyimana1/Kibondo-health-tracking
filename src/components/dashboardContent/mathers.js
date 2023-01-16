@@ -49,7 +49,7 @@ function Parents() {
                     <thead>
                       <tr>
                         <th>Full Name</th>
-                        <th>Age</th>
+
                         <th>Phone number</th>
                         <th>National ID</th>
                         <th>Province</th>
@@ -84,7 +84,7 @@ function Parents() {
                                 {pare.firstName}
                                 {/* {`${pare.firstName} ${pare.secondName}`} */}
                               </td>
-                              <td>{pare.age}</td>
+
                               <td>{pare.telephone}</td>
                               <td>{pare.nationalId}</td>
                               <td>{pare.province}</td>

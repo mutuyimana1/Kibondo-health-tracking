@@ -54,7 +54,7 @@ function Hospitals() {
                         <th>District</th>
                         <th>Sector</th>
                         <th>cell</th>
-                        <th>Hot line</th>
+                        <th>number of department</th>
                         <th>Director</th>
                         <th className="text-right">Action</th>
                       </tr>

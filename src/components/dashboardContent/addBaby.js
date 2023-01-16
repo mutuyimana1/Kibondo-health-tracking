@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
-import { Districts } from "rwanda";
 import axios from "axios";
+import { Provinces, Districts, Sectors, Cells, Villages } from "rwanda";
 
 function AddBaby() {
   const [firstName, setFirstName] = useState("");
@@ -75,9 +75,7 @@ function AddBaby() {
                 <div className="row">
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        First Name <span className="text-danger">*</span>
-                      </label>
+                      <label>First Name</label>
                       <input
                         className="form-control"
                         type="text"
@@ -88,9 +86,7 @@ function AddBaby() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Last Name <span className="text-danger">*</span>
-                      </label>
+                      <label>Last Name</label>
                       <input
                         className="form-control"
                         type="text"
@@ -101,9 +97,7 @@ function AddBaby() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Father's Name <span className="text-danger">*</span>
-                      </label>
+                      <label>Father's Name</label>
                       <input
                         className="form-control"
                         type="text"
@@ -114,9 +108,7 @@ function AddBaby() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Mother's Name <span className="text-danger">*</span>
-                      </label>
+                      <label>Mother's Name</label>
                       <input
                         className="form-control"
                         type="text"
@@ -127,9 +119,7 @@ function AddBaby() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Parent's contact <span className="text-danger">*</span>
-                      </label>
+                      <label>Parent's contact</label>
                       <input
                         className="form-control"
                         type="text"
@@ -140,9 +130,7 @@ function AddBaby() {
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Province <span className="text-danger">*</span>
-                      </label>
+                      <label>Province</label>
                       {/* <input class="form-control" type="text" /> */}
                       <select
                         className="form-control"
@@ -150,107 +138,78 @@ function AddBaby() {
                         onChange={(e) => setProvince(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">Kigali</option>
-                        <option value="Western Province">
-                          Western province
-                        </option>
-                        <option value="Eastern Province">
-                          Eastern Province
-                        </option>
-                        <option value="southern Province">
-                          Southern Province
-                        </option>
-                        <option value="Nothern Province">
-                          Nothern province
-                        </option>
+                        {Provinces().map((p) => (
+                          <option>{p}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        District <span className="text-danger">*</span>
-                      </label>
+                      <label>District</label>
                       <select
                         className="form-control"
                         name={district}
                         onChange={(e) => setDistrict(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">option1</option>
-                        <option value="Western Province">option1</option>
-                        <option value="Eastern Province">option1</option>
-                        <option value="southern Province">option1</option>
-                        <option value="Nothern Province">option1</option>
+                        {Districts(province).map((p) => (
+                          <option>{p}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Sector <span className="text-danger">*</span>
-                      </label>
+                      <label>Sector</label>
                       <select
                         className="form-control"
                         name={sector}
                         onChange={(e) => setSector(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">option1</option>
-                        <option value="Western Province">option1</option>
-                        <option value="Eastern Province">option1</option>
-                        <option value="southern Province">option1</option>
-                        <option value="Nothern Province">option1</option>
+                        {district && (
+                          <>
+                            {Sectors(province, district).map((p) => (
+                              <option>{p}</option>
+                            ))}
+                          </>
+                        )}
                       </select>
                     </div>
                   </div>
                   <div className="col-sm-6">
                     <div className="form-group">
-                      <label>
-                        Cell <span className="text-danger">*</span>
-                      </label>
+                      <label>Cell</label>
                       <select
                         className="form-control"
                         name={cell}
                         onChange={(e) => setCell(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">option1</option>
-                        <option value="Western Province">option1</option>
-                        <option value="Eastern Province">option1</option>
-                        <option value="southern Province">option1</option>
-                        <option value="Nothern Province">option1</option>
+                        {sector && (
+                          <>
+                            {Cells(province, district, sector).map((p) => (
+                              <option>{p}</option>
+                            ))}
+                          </>
+                        )}
                       </select>
                     </div>
                   </div>
 
                   <div className="col-sm-6">
                     <div className="form-group gender-select">
-                      <label className="gen-label">
-                        Gender:<span className="text-danger">*</span>
-                      </label>
-                      <div className="form-check-inline">
-                        <label className="form-check-label">
-                          <input
-                            type="radio"
-                            name={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            className="form-check-input"
-                          />
-                          Male
-                        </label>
-                      </div>
-                      <div className="form-check-inline">
-                        <label className="form-check-label">
-                          <input
-                            type="radio"
-                            name={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            className="form-check-input"
-                          />
-                          Female
-                        </label>
-                      </div>
+                      <label className="gen-label">Gender:</label>
+                      <select
+                        className="form-control"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}
+                      >
+                        <option value>Select</option>
+                        <option value>female</option>
+                        <option value>male</option>
+                      </select>
                     </div>
                   </div>
                 </div>
