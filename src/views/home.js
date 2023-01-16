@@ -17,11 +17,11 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: 1000,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  p: 2,
 };
 
 function Home() {
@@ -75,6 +75,7 @@ function Home() {
       <Header />
       <Modal
         open={open}
+        maxWidth="lg"
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -87,7 +88,7 @@ function Home() {
                 <style
                   dangerouslySetInnerHTML={{
                     __html:
-                      "\n                  th {\n                         width:100%              color: white;\n                    padding-left: 15px;\n                    border-bottom: 1px solid #ddd;\n                  }\n                  tr {\n                    background-color: azure;\n                    font-size: small;\n                  }\n                  td {\n                    height: 70px;\n                  }\n                ",
+                      "\n                  th {\n                         width:100%              color: white;\n                    padding-left: 5px;\n                    border-bottom: 1px solid #ddd;\n                  }\n                  tr {\n                    background-color: azure;\n                    font-size: small;\n                  }\n                  td {\n                    height: 70px;\n                  }\n                ",
                   }}
                 />
                 <tbody>
@@ -97,7 +98,7 @@ function Home() {
                     <th>Weight (in pound)</th>
                     <th>height (in inches)</th>
                     <th>BMI Percetile Result</th>
-                    <th>Comment</th>
+                    <th colSpan={2}>Comment</th>
                   </tr>
                   <tr>
                     <td>{age}</td>
@@ -105,9 +106,13 @@ function Home() {
                     <td>{weight}</td>
                     <td>{height}</td>
                     <td>{BMI_Percentile}</td>
+                    <td>{message}</td>
                     <td>
-                      {message}
-                      <Link to={"/blogs/" + category.toLowerCase()}>
+                      {" "}
+                      <Link
+                        className="advice"
+                        to={"/blogs/" + category.toLowerCase()}
+                      >
                         View Advice
                       </Link>
                     </td>
