@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./sidebar";
-import { Districts } from "rwanda";
+import { Provinces, Districts, Sectors, Cells, Villages } from "rwanda";
 import axios from "axios";
 
 function AddBaby() {
@@ -81,7 +81,7 @@ function AddBaby() {
                       <input
                         className="form-control"
                         type="text"
-                        name={firstName}
+                        value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                       />
                     </div>
@@ -94,7 +94,7 @@ function AddBaby() {
                       <input
                         className="form-control"
                         type="text"
-                        name={lastName}
+                        value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
                       />
                     </div>
@@ -107,7 +107,7 @@ function AddBaby() {
                       <input
                         className="form-control"
                         type="text"
-                        name={fatherName}
+                        value={fatherName}
                         onChange={(e) => setFatherName(e.target.value)}
                       />
                     </div>
@@ -120,7 +120,7 @@ function AddBaby() {
                       <input
                         className="form-control"
                         type="text"
-                        name={motherName}
+                        value={motherName}
                         onChange={(e) => setMotherName(e.target.value)}
                       />
                     </div>
@@ -133,7 +133,7 @@ function AddBaby() {
                       <input
                         className="form-control"
                         type="text"
-                        name={telephone}
+                        value={telephone}
                         onChange={(e) => setTelephone(e.target.value)}
                       />
                     </div>
@@ -146,23 +146,13 @@ function AddBaby() {
                       {/* <input class="form-control" type="text" /> */}
                       <select
                         className="form-control"
-                        name={province}
+                        value={province}
                         onChange={(e) => setProvince(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">Kigali</option>
-                        <option value="Western Province">
-                          Western province
-                        </option>
-                        <option value="Eastern Province">
-                          Eastern Province
-                        </option>
-                        <option value="southern Province">
-                          Southern Province
-                        </option>
-                        <option value="Nothern Province">
-                          Nothern province
-                        </option>
+                        {Provinces().map((p) => (
+                          <option>{p}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -173,15 +163,13 @@ function AddBaby() {
                       </label>
                       <select
                         className="form-control"
-                        name={district}
+                        value={district}
                         onChange={(e) => setDistrict(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">option1</option>
-                        <option value="Western Province">option1</option>
-                        <option value="Eastern Province">option1</option>
-                        <option value="southern Province">option1</option>
-                        <option value="Nothern Province">option1</option>
+                        {Districts(province).map((p) => (
+                          <option>{p}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -192,15 +180,17 @@ function AddBaby() {
                       </label>
                       <select
                         className="form-control"
-                        name={sector}
+                        value={sector}
                         onChange={(e) => setSector(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">option1</option>
-                        <option value="Western Province">option1</option>
-                        <option value="Eastern Province">option1</option>
-                        <option value="southern Province">option1</option>
-                        <option value="Nothern Province">option1</option>
+                        {district && (
+                          <>
+                            {Sectors(province, district).map((p) => (
+                              <option>{p}</option>
+                            ))}
+                          </>
+                        )}
                       </select>
                     </div>
                   </div>
@@ -211,45 +201,31 @@ function AddBaby() {
                       </label>
                       <select
                         className="form-control"
-                        name={cell}
+                        value={cell}
                         onChange={(e) => setCell(e.target.value)}
                       >
                         <option value>Select</option>
-                        <option value="Kigali city">option1</option>
-                        <option value="Western Province">option1</option>
-                        <option value="Eastern Province">option1</option>
-                        <option value="southern Province">option1</option>
-                        <option value="Nothern Province">option1</option>
+                        {sector && (
+                          <>
+                            {Cells(province, district, sector).map((p) => (
+                              <option>{p}</option>
+                            ))}
+                          </>
+                        )}
                       </select>
-                    </div>
-                  </div>
-
-                  <div className="col-sm-6">
-                    <div className="form-group gender-select">
-                      <label className="gen-label">
-                        Gender:<span className="text-danger">*</span>
-                      </label>
-                      <div className="form-check-inline">
-                        <label className="form-check-label">
-                          <input
-                            type="radio"
-                            name={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            className="form-check-input"
-                          />
-                          Male
+                      <div className="form-group">
+                        <label>
+                          Cell <span className="text-danger">*</span>
                         </label>
-                      </div>
-                      <div className="form-check-inline">
-                        <label className="form-check-label">
-                          <input
-                            type="radio"
-                            name={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                            className="form-check-input"
-                          />
-                          Female
-                        </label>
+                        <select
+                          className="form-control"
+                          value={gender}
+                          onChange={(e) => setGender(e.target.value)}
+                        >
+                          <option value>Select</option>
+                          <option value="Kigali city">female</option>
+                          <option value="Western Province">male</option>
+                        </select>
                       </div>
                     </div>
                   </div>
