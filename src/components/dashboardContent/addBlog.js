@@ -48,7 +48,7 @@ function AddBlog() {
                   <input
                     className="form-control"
                     type="text"
-                    name={blogName}
+                    value={blogName}
                     onChange={(e) => setBlogName(e.target.value)}
                   />
                 </div>
@@ -58,7 +58,7 @@ function AddBlog() {
                     <input
                       className="form-control"
                       type="link"
-                      name={blogImage}
+                      value={blogImage}
                       onChange={(e) => setBlogImage(e.target.value)}
                     />
                     <small className="form-text text-muted">
@@ -90,7 +90,7 @@ function AddBlog() {
                     rows={6}
                     className="form-control"
                     defaultValue={""}
-                    name={blogContent}
+                    value={blogContent}
                     onChange={(e) => setBlogContent(e.target.value)}
                   />
                 </div>

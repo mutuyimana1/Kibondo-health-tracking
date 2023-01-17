@@ -48,11 +48,17 @@ function Blogs() {
                         src={bro.blogImage}
                         alt="blog Image here"
                       />
+                      <img
+                        className="img-fluid w-100"
+                        src={bro.blogImageTwo}
+                        alt="blog Image here"
+                      />
                       <div className="p-4">
                         <a className="h3 d-block mb-3" href>
-                          {bro.blogTitle}
+                          {bro.blogName}
                         </a>
                         <p className="m-0">{bro.blogContent}</p>
+                        <p className="m-0">{bro.blogDescription}</p>
                       </div>
                       {/* <div className="d-flex justify-content-between border-top p-4">
                           <div className="d-flex align-items-center">
@@ -77,13 +83,15 @@ function Blogs() {
                           </div>
                         </div> */}
                     </div>
+                    <div className="col-12 text-center">
+                      <button className="btn btn-primary py-3 px-5">
+                        Load More
+                      </button>
+                    </div>
                   </div>
                 ))}
               </>
             )}
-          </div>
-          <div className="col-12 text-center">
-            <button className="btn btn-primary py-3 px-5">Load More</button>
           </div>
         </div>
       </div>
