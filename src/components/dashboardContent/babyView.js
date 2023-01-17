@@ -3,86 +3,106 @@ import Sidebar from "./sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBabiesAction } from "../../redux/baby/actions";
 import { Link } from "react-router-dom";
-import { Dialog ,DialogContent} from "@mui/material";
+import { Dialog, DialogContent } from "@mui/material";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
-
-
 
 function BabyView() {
   const dispatch = useDispatch();
   const { babies, isFetching } = useSelector((state) => state?.baby);
-  const [selectedBaby,setSelectedBaby]=useState({});
-  const [vaccinations,setVaccinations] = useState([]);
-  const [addVaccine,setAddVaccine] = useState(false);
+  const [selectedBaby, setSelectedBaby] = useState({});
+  const [vaccinations, setVaccinations] = useState([]);
+  const [addVaccine, setAddVaccine] = useState(false);
 
-
-  const getSelectedBaby = async(id)=>{
-    setSelectedBaby(babies.data.find(bb=>bb._id===id));
+  const getSelectedBaby = async (id) => {
+    setSelectedBaby(babies.data.find((bb) => bb._id === id));
     setOpen(true);
     const res = await axios.get(`http://localhost:4040/baby/vaccine/${id}`);
     setVaccinations(res.data.data);
-  }
+  };
   useEffect(() => {
     getAllBabiesAction()(dispatch);
   }, []);
-  const [open,setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const submit = async(data)=>{
-      const res = await axios.post(`http://localhost:4040/baby/vaccine/${selectedBaby._id}`,data);
-      setVaccinations([...vaccinations,res.data.data])
-  }
+  const submit = async (data) => {
+    const res = await axios.post(
+      `http://localhost:4040/baby/vaccine/${selectedBaby._id}`,
+      data
+    );
+    setVaccinations([...vaccinations, res.data.data]);
+  };
 
-  const toggleForm = ()=>{
+  const toggleForm = () => {
     setAddVaccine(!addVaccine);
-  }
+  };
 
   return (
     <div>
       <Sidebar />
 
-      <Dialog open={open} onClose={()=>setOpen(false)}>
+      <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogContent>
-          <h3>Vacccination for {selectedBaby.firstName} {selectedBaby.secondName}</h3>
+          <h3>
+            Vacccination for {selectedBaby.firstName} {selectedBaby.secondName}
+          </h3>
 
           {!addVaccine && (
-            <table border={1} className='table table-bordered'>
-            <thead>
-              <tr>
-              <th>Vaccine</th>
-              <th>date</th>
-              <th>details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                vaccinations.map((vaccine)=>(
+            <table border={1} className="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Vaccine</th>
+                  <th>date</th>
+                  <th>details</th>
+                </tr>
+              </thead>
+              <tbody>
+                {vaccinations.map((vaccine) => (
                   <tr key={vaccine._id}>
                     <td>{vaccine.name}</td>
                     <td>{vaccine.date}</td>
                     <td>{vaccine.details}</td>
                   </tr>
-                ))
-              }
-            </tbody>
-          </table>
+                ))}
+              </tbody>
+            </table>
           )}
 
-          <button  onClick={toggleForm} className="btn btn-outline-success">
-            {!addVaccine ? 'Add new vaccine record':'Show vaccination'}
+          <button onClick={toggleForm} className="btn btn-outline-success">
+            {!addVaccine ? "Add new vaccine record" : "Show vaccination"}
           </button>
 
-           {addVaccine && (<div className="mt-1">
-           <form onSubmit={handleSubmit(submit)}>
-            <input type="text" className="form-control" {...register("name", { required: true })} placeholder="vaccination" />
-            <input type="date" className="form-control" {...register("date", { required: true })} placeholder="date" />
-            <textarea className="form-control" {...register("details", { required: true })} placeholder="details"></textarea>
-            <button className="btn btn-primary mt-1">Save</button>
-          </form>
-           </div>)}
+          {addVaccine && (
+            <div className="mt-1">
+              <form onSubmit={handleSubmit(submit)}>
+                <input
+                  type="text"
+                  className="form-control"
+                  {...register("name", { required: true })}
+                  placeholder="vaccination"
+                />
+                <input
+                  type="date"
+                  className="form-control"
+                  {...register("date", { required: true })}
+                  placeholder="date"
+                />
+                <textarea
+                  className="form-control"
+                  {...register("details", { required: true })}
+                  placeholder="details"
+                ></textarea>
+                <button className="btn btn-primary mt-1">Save</button>
+              </form>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
       <div className="page-wrapper">
@@ -135,7 +155,6 @@ function BabyView() {
                         <td>{b?.vaccine}</td>
                         <td className="text-right">
                           <div className="dropdown dropdown-action">
-                            
                             <a
                               href="#"
                               className="action-icon dropdown-toggle"
@@ -144,11 +163,14 @@ function BabyView() {
                             >
                               <i className="fa fa-ellipsis-v" />
                             </a>
-   
+
                             <div className="dropdown-menu dropdown-menu-right">
-                            <span className="dropdown-item" onClick={()=>getSelectedBaby(b._id)}>
-                            <i className="fa fa-th-o m-r-5" /> Vaccine
-                            </span>
+                              <span
+                                className="dropdown-item"
+                                onClick={() => getSelectedBaby(b._id)}
+                              >
+                                <i className="fa fa-th-o m-r-5" /> Vaccine
+                              </span>
                               <a className="dropdown-item" href="#">
                                 <i className="fa fa-pencil m-r-5" /> Edit
                               </a>
@@ -160,7 +182,6 @@ function BabyView() {
                               >
                                 <i className="fa fa-trash-o m-r-5" /> Delete
                               </a>
-                              
                             </div>
                           </div>
                         </td>
