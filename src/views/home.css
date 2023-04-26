@@ -1,13 +1,25 @@
 * {
   font-size: 17px;
 }
+.modal-size {
+  position: absolute;
+  width: 80%;
+  height: 50%;
 
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+
+  transform: translate(-50%, -50%);
+}
 .home-justifycontent {
   background-image: url("../../public/img/What-to-Bring-When-Visiting-a-New-Mom-3-1024x851.png");
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
   height: 70vh;
+
   display: flex;
 }
 
@@ -89,4 +101,12 @@ span {
   right: auto;
   bottom: auto;
   transform: translate(-50%, -50%);
+}
+.advice {
+  background: #009efb;
+  padding: 8px 22px;
+  color: white;
+  display: inline-block;
+  border-radius: 3px;
+  font-size: 12px;
 }

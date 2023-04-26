@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import "../components/dashboardContent/sidebar.css";
 import CloseCircleOutlined from "@ant-design/icons";
 import { registerUserAction, loginUserAction } from "../redux/auth/actions";
 import { useNavigate } from "react-router-dom";
